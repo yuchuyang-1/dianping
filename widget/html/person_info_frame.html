@@ -1,0 +1,278 @@
+<!doctype html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+        <title>APICloud APP</title>
+        <link rel="stylesheet" type="text/css" href="../css/api.css" />
+        <style>
+            html,
+            body {
+                height: 100%;
+                background: #f0f0f0;
+            }
+            
+            section {
+                position: relative;
+                height: auto;
+                margin-top: 8px;
+                overflow: hidden;
+                background-color: #fff;
+            }
+            
+            .row {
+                position: relative;
+                top: -1px;
+                box-sizing: borderbox;
+                height: 49px;
+                border-top: 1px solid #eee;
+            }
+            
+            .title {
+                position: relative;
+                width: 100%;
+                height: 48px;
+                box-sizing: border-box;
+                padding-left: 16px;
+                padding-right: 48px;
+                font-size: 16px;
+                text-align: left;
+                line-height: 48px;
+            }
+            
+            .value {
+                position: absolute;
+                top: 0;
+                right: 48px;
+                height: 48px;
+                font-size: 14px;
+                text-align: right;
+                line-height: 48px;
+                color: #888;
+            }
+            
+            .arrow {
+                position: absolute;
+                top: 14px;
+                right: 16px;
+                width: 16px;
+                height: 20px;
+                background-size: 16px 20px;
+                background-repeat: no-repeat;
+                background-position: center 0;
+                background-image: url(../image/arrow.png);
+            }
+            
+            .avatar {
+                margin-top: 0;
+            }
+            
+            .avatar .row {
+                height: 96px;
+            }
+            
+            .avatar .title {
+                top: 24px;
+                padding-right: 112px;
+            }
+            
+            .avatar .picture {
+                position: absolute;
+                top: 16px;
+                right: 48px;
+                width: 64px;
+                height: 64px;
+                background-size: 64px 64px;
+                background-repeat: no-repeat;
+                background-position: center 0;
+                background-image: url(../image/my/profile_default.png);
+            }
+            
+            .avatar .arrow {
+                top: 38px;
+            }
+            
+            .active {
+                -webkit-opacity: 0.7;
+                opacity: 0.7;
+            }
+            
+            .logout {
+                width: 100%;
+                background: #f0f0f0;
+                position: absolute;
+                left: 0px;
+                bottom: 10px;
+            }
+            
+            .btn {
+                margin: 3px 10px;
+                background: #ff6836;
+                height: 40px;
+                line-height: 40px;
+                text-align: center;
+                font-size: 20px;
+                margin-top: 20px;
+                border-radius: 5px;
+                color: #fff;
+            }
+            
+            .highlight {
+                opacity: 0.7;
+            }
+        </style>
+    </head>
+
+    <body>
+        <section class="avatar">
+            <div class="row" tapmode="highlight" onclick="fnSetAvatar();">
+                <div class="title">我的头像</div>
+                <div id="avatar" class="picture"></div>
+                <div class="arrow"></div>
+            </div>
+        </section>
+        <section class="profile">
+            <div class="row open-win" win="citylist">
+                <div class="title">
+                    常居地
+                </div>
+                <div id="city" class="value"></div>
+                <div class="arrow"></div>
+            </div>
+            <div class="row" tapmode="highlight" onclick="fnSetGender();">
+                <div class="title">
+                    性别
+                </div>
+                <div id="gender" class="value"></div>
+                <div class="arrow"></div>
+            </div>
+            <div class="row" tapmode="highlight" onclick="fnSetBirthday();">
+                <div class="title">
+                    生日
+                </div>
+                <div id="birthday" class="value"></div>
+                <div class="arrow"></div>
+            </div>
+        </section>
+        <section class="logout">
+            <div class="btn" tapmode="highlight" onclick="fnLogout();">退出登录</div>
+        </section>
+    </body>
+    <script type="text/javascript" src="../script/api.js"></script>
+    <script type="text/javascript" src="../script/common.js"></script>
+    <script type="text/javascript" src="../script/SHA1.js"></script>
+    <script type="text/javascript" src="../script/remotedb.js"></script>
+    <script type="text/javascript">
+        apiready = function() {
+            fnReadyOpenWin();
+            fnInit();
+            fnInitEvent();
+            fnSetInfo();
+        };
+
+        var avatar, city, gender, birthday;
+
+        function fnInit() {
+            avatar = $api.byId('avatar');
+            city = $api.byId('city');
+            gender = $api.byId('gender');
+            birthday = $api.byId('birthday');
+        };
+
+        function fnInitEvent() {
+            api.addEventListener({
+                name: 'cityChange'
+            }, function(ret, err) {
+                fnSetInfo();
+            });
+        };
+
+        function fnSetInfo() {
+            avatar.style.backgroundImage = 'url(' + $api.getStorage('avatar') + ')' || 'url(../image/my/profile_default.png)';
+
+            city.innerHTML = $api.getStorage('city') || '';
+            gender.innerHTML = $api.getStorage('gender') || '';
+            birthday.innerHTML = $api.getStorage('birthday') || '';
+
+
+            api.sendEvent({
+                name: 'setuserinfo'
+            });
+        };
+
+        function fnSetBirthday() {
+            api.openPicker({
+                type: 'date',
+                date: birthday.innertHTML,
+                title: '日期'
+            }, function(ret, err) {
+                $api.setStorage('birthday', ret.year + '-' + ret.month + '-' + ret.day);
+                fnSetInfo();
+            });
+        };
+
+        function fnSetAvatar() {
+            api.actionSheet({
+                cancelTitle: '取消',
+                buttons: ['拍照', '打开相册']
+            }, function(ret, err) {
+                if (ret.buttonIndex == 3) {
+                    return;
+                }
+
+                var sourceType = (ret.buttonIndex == 1) ? 'camera' : 'album';
+
+                api.getPicture({
+                    sourceType: sourceType,
+                    allowEdit: true,
+                    quality: 50,
+                    targetWidth: 100,
+                    targetHeight: 100
+                }, function(ret, err) {
+                    if (ret && ret.data) {
+                        $api.setStorage('avatar', ret.data);
+                        fnSetInfo();
+                    }
+                });
+            });
+        };
+
+        function fnSetGender() {
+            var buttons = ['男', '女'];
+            api.actionSheet({
+                title: '请选择',
+                cancelTitle: '取消',
+                buttons: buttons
+            }, function(ret, err) {
+                if (3 == ret.buttonIndex) {
+                    return;
+                }
+
+                $api.setStorage('gender', buttons[ret.buttonIndex - 1]);
+                fnSetInfo();
+            });
+        };
+
+        function fnLogout() {
+            $api.rmStorage('accessToken');
+            $api.rmStorage('avatar');
+            $api.rmStorage('account');
+            $api.rmStorage('gender');
+            $api.rmStorage('birthday');
+            $api.rmStorage('avatar');
+
+            api.sendEvent({
+                name: 'logout'
+            });
+
+            api.alert({
+                title: '注销',
+                msg: '已退出当前账号'
+            });
+
+            api.closeWin();
+        };
+    </script>
+
+</html>

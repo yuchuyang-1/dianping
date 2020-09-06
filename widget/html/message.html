@@ -1,0 +1,154 @@
+<!doctype html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+        <title>APICloud APP</title>
+        <link rel="stylesheet" type="text/css" href="../css/api.css" />
+        <style>
+            header {
+                background-color: #fff;
+                border-bottom: solid #e0e0e0 1px;
+            }
+            
+            h1 {
+                height: 50px;
+                line-height: 50px;
+                color: rgb(38, 38, 38);
+                color: #000;
+                font-size: 20px;
+                text-align: center;
+            }
+            
+            .back {
+                position: absolute;
+                left: 0px;
+                bottom: 0px;
+                width: 50px;
+                height: 50px;
+                background: url(../image/header/back.png) center center no-repeat;
+                background-size: 15px auto;
+            }
+            
+            nav {
+                position: relative;
+                height: 50px;
+                background-color: #fff;
+                display: -webkit-box;
+                display: -webkit-flex;
+                display: flex;
+                border-bottom: solid #e0e0e0 1px;
+            }
+            
+            nav>div {
+                -webkit-box-flex: 1;
+                -webkit-flex: 1;
+                flex: 1;
+                width: 100%;
+                line-height: 50px;
+                color: #9C9C9C;
+                font-size: 18px;
+                text-align: center;
+            }
+            
+            .nav-act {
+                color: #ff6836;
+            }
+            
+            .nav-hov {
+                background-color: rgba(250, 240, 230, 0.7);
+            }
+            
+            mark {
+                position: absolute;
+                bottom: 0px;
+                left: 0px;
+                text-align: center;
+                background: transparent;
+                -webkit-transition: 300ms;
+            }
+            
+            mark>img {
+                height: 8px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <header id="header">
+            <div class="back event-back"></div>
+            <h1>用户消息</h1>
+        </header>
+        <nav id="nav">
+            <div class="nav-act" tapmode="nav-hov" onclick="fnChange(0);">用户消息</div>
+            <div tapmode="nav-hov" onclick="fnChange(1);">系统消息</div>
+            <div tapmode="nav-hov" onclick="fnChange(2);">广播消息</div>
+            <mark><img src="../image/header/arrow_up.png"></mark>
+        </nav>
+    </body>
+    <script type="text/javascript" src="../script/api.js"></script>
+    <script type="text/javascript" src="../script/common.js"></script>
+    <script type="text/javascript">
+        apiready = function() {
+            fnReady();
+
+            fnInit();
+
+            api.openFrameGroup({
+                name: 'message_group',
+                scrollEnabled: true,
+                rect: {
+                    x: 0,
+                    y: headerHeight + navHeight,
+                    w: 'auto',
+                    h: 'auto'
+                },
+                index: 0,
+                frames: [{
+                    name: 'user_msg_frame',
+                    url: 'user_msg_frame.html'
+                }, {
+                    name: 'system_msg_frame',
+                    url: 'system_msg_frame.html'
+                }, {
+                    name: 'broadcast_msg_frame',
+                    url: 'broadcast_msg_frame.html'
+                }]
+            }, function(ret, err) {
+                fnChangeStyle(ret.index);
+            });
+        };
+
+        var navs, mark;
+
+        function fnInit() {
+            navs = $api.domAll(nav, 'div');
+            mark = $api.dom(nav, 'mark');
+            mark.style.width = (api.winWidth / 3) + 'px';
+        };
+
+        function fnChange(index) {
+            fnChangeStyle(index);
+            api.setFrameGroupIndex({
+                name: 'message_group',
+                index: index,
+                scroll: true
+            });
+        };
+
+        function fnChangeStyle(index) {
+            for (var i = 0; i < navs.length; i++) {
+                if (i == index) {
+                    $api.addCls(navs[i], 'nav-act');
+                } else {
+                    $api.removeCls(navs[i], 'nav-act');
+                }
+            };
+
+            var markPosX = (api.winWidth / 3) * index + 'px';
+            $api.css(mark, '-webkit-transform: translate(' + markPosX + ', 0)');
+        };
+    </script>
+
+</html>

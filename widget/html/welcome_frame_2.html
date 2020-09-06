@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+        <title>APICloud APP</title>
+        <link rel="stylesheet" type="text/css" href="../css/api.css" />
+        <style>
+            html,
+            body {
+                height: 100%;
+                background: transparent;
+            }
+            
+            header {
+                height: 50px;
+                position: relative;
+            }
+            
+            .skip {
+                position: absolute;
+                bottom: 0px;
+                right: 15px;
+                width: 90px;
+                height: 38px;
+                line-height: 38px;
+                border: solid rgb(211, 211, 211) 1px;
+                border-radius: 38px;
+                color: #000;
+                font-size: 16px;
+            }
+            
+            .skip>span {
+                padding-left: 20px;
+            }
+            
+            .skip>img {
+                padding-top: 12px;
+                vertical-align: top;
+                height: 13px;
+            }
+            
+            .highlight {
+                opacity: 0.7;
+            }
+        </style>
+    </head>
+
+    <body>
+        <header id="header">
+            <div class="skip" tapmode="highlight" onclick="fnStart()">
+                <span>跳过</span>
+                <img src="../image/welcome/arrow.png" />
+            </div>
+        </header>
+    </body>
+    <script type="text/javascript" src="../script/api.js"></script>
+    <script type="text/javascript" src="../script/common.js"></script>
+    <script type="text/javascript">
+        apiready = function() {
+            fnReady();
+        };
+
+        function fnStart() {
+            api.closeFrameGroup({
+                name: 'welcome_group'
+            });
+        };
+    </script>
+
+</html>

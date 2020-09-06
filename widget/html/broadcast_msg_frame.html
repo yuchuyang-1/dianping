@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+        <title>APICloud APP</title>
+        <link rel="stylesheet" type="text/css" href="../css/api.css" />
+        <style>
+            html,
+            body {
+                background-color: #f0f0f0;
+            }
+            
+            .empty>img {
+                float: left;
+                padding-left: 20px;
+                height: 124px;
+            }
+            
+            .empty>span {
+                height: 124px;
+                line-height: 124px;
+                padding-left: 20px;
+            }
+            
+            .message {
+                display: none;
+                margin-top: 8px;
+                background-color: #fff;
+            }
+            
+            .message>div {
+                position: relative;
+                top: -1px;
+                box-sizing: border-box;
+                height: 49px;
+                border-top: 1px solid #eee;
+            }
+            
+            .message>div>.msg {
+                box-sizing: border-box;
+                height: 48px;
+                padding-left: 16px;
+                padding-right: 96px;
+                line-height: 48px;
+                color: #888;
+                font-size: 16px;
+            }
+            
+            .message>div>.time {
+                position: absolute;
+                top: 0;
+                right: 16px;
+                height: 48px;
+                line-height: 48px;
+                color: #888;
+                text-align: right;
+                font-size: 12px;
+            }
+            
+            .active {
+                -webkit-opacity: 0.7;
+                opacity: 0.7;
+            }
+        </style>
+    </head>
+
+    <body>
+        <section class="h20"></section>
+        <section id="empty" class="empty">
+            <img src="../image/home/no_message.png">
+            <span>暂无消息</span>
+        </section>
+        <section id="message" class="message">
+        </section>
+    </body>
+    <script id="template" type="text/template">
+        {{~ it:data }}
+        <div>
+            <span class="msg">{{= data.msg }}</span>
+            <span class="time">{{= data.receiveTime }}</span>
+        </div>
+        {{~}}
+    </script>
+    <script type="text/javascript" src="../script/api.js"></script>
+    <script type="text/javascript">
+        apiready = function() {
+            
+        };
+    </script>
+
+</html>

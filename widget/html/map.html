@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+        <title>APICloud APP</title>
+        <link rel="stylesheet" type="text/css" href="../css/api.css" />
+        <style>
+            html,
+            body {
+                height: 100%;
+                background-color: #fff;
+            }
+            
+            header {
+                background-color: #fcfcfc;
+                border-bottom: solid #dddfe3 1px;
+            }
+            
+            h1 {
+                height: 50px;
+                line-height: 50px;
+                color: rgb(38, 38, 38);
+                font-size: 20px;
+                text-align: center;
+            }
+            
+            .back {
+                position: absolute;
+                left: 0px;
+                bottom: 0px;
+                width: 50px;
+                height: 50px;
+                background: url(../image/header/back.png) center center no-repeat;
+                background-size: 15px auto;
+            }
+            
+            .highlight {
+                opacity: 0.7;
+            }
+        </style>
+    </head>
+
+    <body>
+        <header id="header">
+            <div class="back" tapmode="highlight" onclick="fnClose()"></div>
+            <h1>商家位置</h1>
+        </header>
+    </body>
+    <script type="text/javascript" src="../script/api.js"></script>
+    <script type="text/javascript" src="../script/common.js"></script>
+    <script type="text/javascript">
+        apiready = function() {
+            fnReady();
+            fnInitMap();
+        };
+
+        var bmap;
+
+        function fnInitMap() {
+            if(!api.pageParam.lat){
+                alert('很抱歉，定位失败，无法显示商家位置');
+                api.closeWin();
+                return;
+            }
+
+            bmap = api.require('bMap');
+            bmap.open({
+                rect: {
+                    x: 0,
+                    y: headerHeight,
+                    w: api.winWidth,
+                    h: api.winHeight - headerHeight
+                },
+                center: api.pageParam,
+                zoomLevel: 17, //3~18
+                showUserLocation: true,
+                fixed: true
+            });
+        };
+
+        function fnClose() {
+            bmap.close();
+            api.closeWin();
+        };
+    </script>
+
+</html>

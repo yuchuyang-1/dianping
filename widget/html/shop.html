@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+        <title>setting</title>
+        <link rel="stylesheet" type="text/css" href="../css/api.css" />
+        <style>
+            html,
+            body {
+                height: 100%;
+                display: -webkit-box;
+                display: -webkit-flex;
+                display: flex;
+                -webkit-box-orient: vertical;
+                -webkit-flex-flow: column;
+                flex-flow: column;
+                background-color: #f0f0f0;
+            }
+            
+            header {
+                position: relative;
+                height: 50px;
+                background-color: #fcfcfc;
+                border-bottom: solid #dddfe3 1px;
+            }
+            
+            h1 {
+                height: 50px;
+                line-height: 50px;
+                color: rgb(38, 38, 38);
+                font-size: 20px;
+                text-align: center;
+            }
+            
+            .back {
+                position: absolute;
+                left: 0px;
+                bottom: 0px;
+                width: 50px;
+                height: 50px;
+                background: url(../image/header/back.png) center center no-repeat;
+                background-size: 15px auto;
+            }
+            
+            .share {
+                position: absolute;
+                right: 0px;
+                bottom: 0px;
+                width: 50px;
+                height: 50px;
+                background: url(../image/header/share.png) center center no-repeat;
+                background-size: 24px auto;
+            }
+            
+            .place-holder {
+                -webkit-box-flex: 1;
+                -webkit-flex: 1;
+                flex: 1;
+            }
+            
+            footer {
+                position: relative;
+                box-sizing: border-box;
+                height: 55px;
+                padding-left: 16px;
+                line-height: 71px;
+                background-color: #fcfcfc;
+            }
+            
+            footer .unit {
+                font-size: 14px;
+                color: #ff5922;
+            }
+            
+            footer .price {
+                font-size: 36px;
+                color: #ff5922;
+            }
+            
+            footer .sub-price {
+                font-size: 12px;
+                color: #888;
+            }
+            
+            footer .buy-button {
+                position: absolute;
+                box-sizing: border-box;
+                width: 146px;
+                height: 40px;
+                top: 8px;
+                right: 16px;
+                border-radius: 3px;
+                border: 1px solid #ff6633;
+                background-color: #ff6633;
+                line-height: 38px;
+                color: #fff;
+                font-size: 14px;
+                font-weight: 600;
+                text-align: center;
+            }
+            
+            footer .buy-button.active {
+                background-color: #fff;
+                color: #ff6633;
+            }
+        </style>
+    </head>
+
+    <body>
+        <header id="header">
+            <div class="back event-back"></div>
+            <h1 id="title"></h1>
+            <div class="share" onclick="fnOpenShareFrame();"></div>
+        </header>
+        <section class="place-holder"></section>
+        <footer id="footer">
+            <span class="unit">￥</span>
+            <span id="price" class="price"></span>
+            <span id="subPrice" class="sub-price"></span>
+            <div id="buy" class="buy-button" tapmode="active" onclick="fnBuy()"></div>
+        </footer>
+    </body>
+    <script type="text/javascript" src="../script/api.js"></script>
+    <script type="text/javascript" src="../script/common.js"></script>
+    <script type="text/javascript" src="../script/localdb.js"></script>
+    <script type="text/javascript">
+        apiready = function() {
+            fnReady();
+            fnReadyFrame();
+
+            fnInitLocal();
+            fnInsertHistory(api.pageParam.shopId);
+
+            fnInitEvent();
+            
+            fnSetValue();
+        };
+
+        function fnInitEvent() {
+            api.addEventListener({
+                name: 'keyback'
+            }, function(ret, err) {
+                if (shareStatus) {
+                    fnOpenShareFrame();
+                } else {
+                    api.closeWin();
+                }
+            });
+        };
+
+        function fnSetValue() {
+            var title = $api.byId('title'),
+                price = $api.byId('price'),
+                subPrice = $api.byId('subPrice'),
+                buy = $api.byId('buy');
+
+            title.innerHTML = api.pageParam.shopName;
+
+            price.innerHTML = '<del>' + parseInt(api.pageParam.price * 10) / 10 + '</del>';
+            subPrice.innerHTML = '<del>￥' + parseInt(api.pageParam.price * 1.2 * 10) / 10 + '</del>';
+            buy.innerHTML = parseInt(api.pageParam.price * 0.15 * 10) / 10 + '元&nbsp;限时抢购';
+        };
+
+        var shareStatus = false;
+
+        function fnOpenShareFrame() {
+            shareStatus = !shareStatus;
+            if (shareStatus) {
+                api.openFrame({
+                    name: 'share_frame',
+                    url: './share_frame.html',
+                    bounces: false,
+                    vScrollBarEnabled: false,
+                    hScrollBarEnabled: false,
+                    rect: {
+                        x: 0,
+                        y: 0,
+                        w: 'auto',
+                        h: 'auto'
+                    }
+                });
+            } else {
+                api.closeFrame({
+                    name: 'share_frame'
+                });
+            }
+        };
+
+        function fnBuy() {
+            api.toast({
+                msg: '演示版不支持购买',
+                duration: 2000,
+                location: 'bottom'
+            });
+        };
+    </script>
+
+</html>

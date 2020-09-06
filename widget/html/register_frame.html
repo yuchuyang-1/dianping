@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+        <title>APICloud APP</title>
+        <link rel="stylesheet" type="text/css" href="../css/api.css" />
+        <style>
+            html,
+            body {
+                height: 100%;
+                background-color: #f0f0f0;
+            }
+            
+            input {
+                height: 50px;
+                width: 80%;
+                font-size: 18px;
+                color: #8E8C8C;
+            }
+            
+            input::-webkit-input-placeholder {
+                color: #ccc;
+            }
+            
+            .h15 {
+                height: 15px
+            }
+            
+            .username,
+            .email,
+            .passwd {
+                background: #fff;
+            }
+            
+            .username img,
+            .passwd img,
+            .email img {
+                vertical-align: top;
+            }
+            
+            .item {
+                background-color: #fff;
+                border-bottom: 1px solid #e0e0e0;
+                position: relative;
+            }
+            
+            .btn {
+                margin: 3px 10px;
+                background: #ff6836;
+                height: 40px;
+                line-height: 40px;
+                text-align: center;
+                font-size: 20px;
+                margin-top: 20px;
+                border-radius: 5px;
+                color: #fff;
+            }
+            
+            .username img {
+                width: 25px;
+                margin-top: 15px;
+                margin-left: 10px;
+                margin-right: 9px;
+            }
+            
+            .email img {
+                width: 25px;
+                margin-top: 15px;
+                margin-left: 10px;
+                margin-right: 9px;
+            }
+            
+            .passwd img {
+                height: 25px;
+                margin-top: 10px;
+                margin-left: 10px;
+                margin-right: 10px;
+            }
+            
+            input {
+                outline: none;
+            }
+        </style>
+    </head>
+
+    <body>
+        <section class="h15"></section>
+        <section>
+            <div class="item email">
+                <img src="../image/login01.png">
+                <input type="text" placeholder="邮箱" id="email">
+            </div>
+            <div class="item passwd">
+                <img src="../image/login02.png">
+                <input type="password" placeholder="密码" id="password">
+            </div>
+            <div class="btn" tapmode onclick="fnRegister();">注 册</div>
+        </section>
+    </body>
+    <script type="text/javascript" src="../script/api.js"></script>
+    <script type="text/javascript" src="../script/SHA1.js"></script>
+    <script type="text/javascript" src="../script/remotedb.js"></script>
+    <script type="text/javascript">
+        apiready = function() {
+
+        };
+
+        function fnRegister() {
+            fnPost('user', {
+                body: JSON.stringify({
+                    username: $api.byId('email').value,
+                    password: $api.byId('password').value
+                })
+            }, 'application/json', false, false, function(ret, err) {
+                if (ret && ret.id) {
+                    api.execScript({
+                        name: 'login',
+                        frameName: 'login_frame',
+                        script: 'fnSetEmail("' + $api.byId('email').value + '");'
+                    });
+
+                    api.alert({
+                        title: '注册',
+                        msg: '注册成功，请登录'
+                    });
+
+                    api.closeWin();
+                } else {
+                    api.toast({
+                        msg: '注册失败，用户名已存在',
+                        duration: 2000,
+                        location: 'bottom'
+                    });
+                }
+            });
+        };
+    </script>
+
+</html>

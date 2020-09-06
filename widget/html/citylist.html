@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+        <title>cityList</title>
+        <link rel="stylesheet" type="text/css" href="../css/api.css" />
+        <style>
+            header {
+                background-color: #fcfcfc;
+                border-bottom: solid #dddfe3 1px;
+            }
+            
+            h1 {
+                height: 50px;
+                line-height: 50px;
+                color: rgb(38, 38, 38);
+                font-size: 20px;
+                text-align: center;
+            }
+            
+            .back {
+                position: absolute;
+                left: 0px;
+                bottom: 0px;
+                width: 50px;
+                height: 50px;
+                background: url(../image/header/back.png) center center no-repeat;
+                background-size: 15px auto;
+            }
+        </style>
+    </head>
+
+    <body>
+        <header id="header">
+            <div class="back event-back"></div>
+            <h1>城市列表</h1>
+        </header>
+    </body>
+    <script type="text/javascript" src="../script/api.js"></script>
+    <script type="text/javascript" src="../script/common.js"></script>
+    <script type="text/javascript">
+        apiready = function() {
+            fnReady();
+            fnInitCityList();
+        };
+
+        function fnInitCityList() {
+            var uicitylist = api.require('UICityList');
+            uicitylist.open({
+                rect: {
+                    x: 0,
+                    y: headerHeight,
+                    w: api.winWidth,
+                    h: api.frameHeight - headerHeight
+                },
+                resource: 'widget://res/cityList.json',
+                styles: {
+                    searchBar: {
+                        bgColor: '#696969',
+                        cancelColor: '#E3E3E3'
+                    },
+                    location: {
+                        color: '#696969',
+                        size: 12
+                    },
+                    sectionTitle: {
+                        bgColor: '#eee',
+                        color: '#000',
+                        size: 12
+                    },
+                    item: {
+                        bgColor: '#fff',
+                        activeBgColor: '#ccc',
+                        color: '#888',
+                        size: 14,
+                        height: 40
+                    },
+                    indicator: {
+                        bgColor: '#fff',
+                        color: '#696969'
+                    }
+                },
+                currentCity: '北京',
+                locationWay: 'GPS',
+                hotTitle: '热门城市',
+                placeholder: '输入城市名或首字母查询'
+            }, function(ret, err) {
+                if (ret.eventType == 'selected') {
+                    $api.setStorage('city', ret.cityInfo.city);
+
+                    api.sendEvent({
+                        name: 'cityChange'
+                    });
+
+                    api.closeWin();
+                }
+            });
+        };
+    </script>
+
+</html>

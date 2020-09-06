@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+        <title>shop</title>
+        <link rel="stylesheet" type="text/css" href="../css/api.css" />
+        <style>
+            html,
+            body {
+                height: 100%;
+                background: #f0f0f0;
+            }
+            
+            .h80 {
+                height: 64px;
+            }
+            
+            .h40 {
+                height: 32px;
+            }
+            
+            .h20 {
+                height: 16px;
+            }
+            
+            .h10 {
+                height: 8px;
+                background: #f0f0f0;
+            }
+            
+            .h4 {
+                height: 4px;
+            }
+            
+            .h1 {
+                height: 1px;
+                background-color: #eee;
+            }
+            
+            .fr {
+                float: right;
+            }
+            
+            .fl {
+                float: left;
+            }
+            
+            .hightitem {
+                background-color: #fff;
+            }
+            
+            .inwrap {
+                padding-right: 15px;
+                padding-left: 15px;
+            }
+            
+            .shopcover {
+                width: 100%;
+            }
+            
+            .sub-title {
+                position: relative;
+                box-sizing: border-box;
+                width: auto;
+                height: 52px;
+                min-height: 52px;
+                padding: 8px 16px;
+                font-size: 14px;
+                color: #444;
+                line-height: 20px;
+                background-color: #fff;
+            }
+            
+            .sub-title .favorite {
+                position: absolute;
+                top: 4px;
+                right: 8px;
+                height: 44px;
+                width: 80px;
+                font-size: 16px;
+                line-height: 44px;
+                color: #fff;
+                text-align: center;
+                background-color: #ff6633;
+                background-clip: border-box;
+                border-radius: 4px;
+            }
+            
+            .sub-title .map {
+                position: absolute;
+                top: 4px;
+                right: 96px;
+                height: 44px;
+                width: 80px;
+                font-size: 16px;
+                line-height: 44px;
+                color: #fff;
+                text-align: center;
+                background-color: #ff6633;
+                background-clip: border-box;
+                border-radius: 4px;
+            }
+            
+            .discount {
+                width: 100%;
+                height: 60px;
+                background-color: #fff;
+            }
+            
+            .discount-row {
+                position: relative;
+                top: 8px;
+                width: 100%;
+                height: 20px;
+            }
+            
+            .discount-tag {
+                position: absolute;
+                left: 16px;
+                width: 50px;
+                height: 20px;
+                line-height: 22px;
+                background-color: #ff6633;
+                border-radius: 10px;
+                color: #fff;
+                text-align: center;
+                font-size: 12px;
+            }
+            
+            .discount-text {
+                box-sizing: border-box;
+                height: 20px;
+                line-height: 22px;
+                padding-left: 74px;
+                color: #444;
+                font-size: 12px;
+                text-align: left;
+            }
+            
+            .support {
+                position: relative;
+                height: 50px;
+                background-color: #fff;
+            }
+            
+            .support-options {
+                position: absolute;
+                top: 18px;
+                left: 16px;
+                width: 180px;
+                display: -webkit-box;
+                display: -webkit-flex;
+                display: flex;
+                -webkit-box-orient: horizontal;
+                -webkit-flex-flow: row;
+                flex-flow: row;
+            }
+            
+            .support-option {
+                -webkit-box: 1;
+                -webkit-flex: 1;
+                flex: 1;
+                box-sizing: border-box;
+                padding-left: 19px;
+                height: 15px;
+                line-height: 15px;
+                background-repeat: no-repeat;
+                background-image: url(../image/reserve.png);
+                background-size: 15px 15px;
+                font-size: 12px;
+                color: #65c07a;
+            }
+            
+            .support .sold {
+                position: absolute;
+                top: 18px;
+                right: 16px;
+                box-sizing: border-box;
+                padding-left: 19px;
+                height: 15px;
+                line-height: 15px;
+                background-repeat: no-repeat;
+                background-image: url(../image/reserve1.png);
+                background-size: 15px 15px;
+                font-size: 12px;
+                color: #888;
+            }
+            
+            .good-comment {
+                position: relative;
+                height: 50px;
+                background-color: #fff;
+            }
+            
+            .good-comment .good {
+                position: absolute;
+                box-sizing: border-box;
+                padding-left: 18px;
+                left: 16px;
+                top: 18px;
+                width: 90px;
+                height: 14px;
+                background-image: url(../image/tuan_review_bad.png);
+                background-repeat: no-repeat;
+                background-size: 14px 14px;
+                font-size: 14px;
+                color: #444;
+            }
+            
+            .good-comment .good .percent {
+                color: #ff6633;
+            }
+            
+            .good-comment .comment {
+                position: absolute;
+                right: 40px;
+                top: 18px;
+                width: 120px;
+                height: 14px;
+                color: #888;
+                font-size: 13px;
+                text-align: right;
+            }
+            /* 3. */
+            
+            .brief .title {
+                height: 50px;
+                line-height: 50px;
+                font-size: 18px;
+                color: #000;
+            }
+            
+            .brief .describe {
+                color: #666;
+                font-size: 14px;
+                line-height: 20px;
+            }
+            
+            .brief .ico {
+                height: 50px;
+                line-height: 50px;
+                font-size: 14px;
+                color: #7AB388;
+            }
+            
+            .brief .ico img {
+                height: 14px;
+            }
+            /* 5. */
+            
+            .darktitle {
+                height: 50px;
+                line-height: 50px;
+                font-size: 14px;
+                color: #666;
+            }
+            
+            .firstrow {
+                position: relative;
+            }
+            
+            .secrow {
+                font-size: 14px;
+                color: #666;
+                border-bottom: 1px solid #e0e0e0;
+                padding-bottom: 15px;
+            }
+            
+            .shopinfo .left {
+                height: 60px;
+                padding: 10px 0;
+            }
+            
+            .shopinfo .right {
+                position: absolute;
+                top: 0px;
+                right: -15px;
+                padding: 15px;
+                border-left: 1px solid #e0e0e0;
+            }
+            
+            .shopinfo .right img {
+                height: 36px;
+            }
+            
+            .shopinfo .shopname {
+                font-size: 20px;
+            }
+            
+            .moreshop {
+                height: 50px;
+                line-height: 50px;
+                font-size: 14px;
+            }
+            /* 6. */
+            
+            .tuanitem {
+                height: 50px;
+                line-height: 50px;
+                font-size: 14px;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .tuanitem .tuan02,
+            .tuanitem .tuan03,
+            .tuantotalprice .totalprice01,
+            .tuantotalprice .totalprice02,
+            .tuanrealprice .realprice01,
+            .tuanrealprice .realprice02 {
+                float: right;
+                width: 50px;
+                font-size: 14px;
+            }
+            
+            .tuantotalprice {
+                margin-top: 10px;
+            }
+            
+            .tuantotalprice,
+            .tuanrealprice {
+                height: 30px;
+            }
+            
+            .tuanrealprice .realprice02 {
+                font-size: 16px;
+                color: #FC5500;
+            }
+            
+            .tuanitem .tuan03,
+            .tuantotalprice .totalprice02,
+            .tuanrealprice .realprice02 {
+                text-align: right;
+            }
+            
+            .smallitem .averageprice {
+                float: right;
+            }
+            
+            .smallitem {
+                height: 20px;
+                line-height: 20px;
+                font-size: 14px;
+            }
+            
+            .recommandtitle {
+                line-height: 25px;
+                font-size: 14px;
+                color: #666;
+            }
+            
+            .recommanddish {
+                line-height: 22px;
+                font-size: 14px;
+            }
+            
+            .moredetail {
+                height: 50px;
+                line-height: 50px;
+                font-size: 14px;
+                border-top: 1px solid #e0e0e0;
+            }
+            
+            .lastitem {
+                padding-bottom: 10px;
+            }
+            /* 7. */
+            
+            .buyinfo .infotitle {
+                line-height: 25px;
+                font-size: 14px;
+                color: #666;
+            }
+            
+            .buyinfo li {
+                line-height: 24px;
+                font-size: 13px;
+                color: #000;
+            }
+            
+            .buyinfo li img {
+                height: 5px;
+                padding-right: 5px;
+            }
+            
+            .arrow {
+                float: right;
+                height: 20px;
+                padding-top: 15px;
+            }
+            /* 8. */
+            
+            .othertuan {
+                height: 50px;
+                line-height: 50px;
+            }
+            
+            .othertuan .price,
+            .othertuan .symbol {
+                color: #FC5500;
+            }
+            
+            .othertuan .price {
+                font-size: 15px;
+            }
+            
+            .othertuan .o-price {
+                font-size: 12px;
+                color: #666;
+            }
+            
+            .othertuan .price01 {
+                display: inline-block;
+                width: 30%;
+                vertical-align: top;
+            }
+            
+            .othertuan .title {
+                width: 50%;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                word-wrap: normal;
+                overflow: hidden;
+            }
+            
+            .bb {
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .presshover {
+                background-color: #FAFAFA;
+            }
+            
+            .buyhover {
+                background-color: rgba(252, 85, 0, 0.6) !important;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="picture" class="shopcover"></div>
+        <div class="h1"></div>
+        <div class="sub-title">
+            仅售<span id="price"></span>元，价值30元代金卷，全场通用，可叠加，不限时段通用！
+        </div>
+        <div class="h10"></div>
+        <div class="sub-title">
+            <div class="favorite" tapmode="highlight" onclick="fnAddFavorite()">我要收藏</div>
+            <div id="map" class="map open-win" win="map">查看位置</div>
+        </div>
+        <div class="h10"></div>
+        <div class="discount">
+            <div class="discount-row">
+                <div class="discount-tag">减22元</div>
+                <div class="discount-text">新用户下单减22元，每人可享一次</div>
+            </div>
+            <div class="h4"></div>
+            <div class="discount-row">
+                <div class="discount-tag">减20元</div>
+                <div class="discount-text">新用户限享受一次</div>
+            </div>
+        </div>
+        <div class="h1"></div>
+        <div class="support">
+            <div class="support-options">
+                <div class="support-option">
+                    随时退
+                </div>
+                <div class="support-option">
+                    过期退
+                </div>
+                <div class="support-option">
+                    免预约
+                </div>
+            </div>
+            <div class="sold">
+                已售364734
+            </div>
+        </div>
+        <div class="h20"></div>
+        <div class="good-comment inwrap">
+            <div class="good">好评度<span class="percent">95%</span></div>
+            <div class="comment">共4.1万个消费评价</div>
+            <img src="../image/arrow.png" alt="" class="arrow">
+        </div>
+        <div class="darktitle inwrap">适用商户</div>
+        <div class="shopinfo inwrap hightitem">
+            <div class="firstrow ">
+                <div class="left">
+                    <div class="shopname">光谷步行街店</div>
+                    <div class="star">
+                        <img src="" alt="" class="star">
+                        <span class="info">离你最近</span>
+                    </div>
+                </div>
+                <div class="right"><img src="../image/phone.png" alt="" class="phone"></div>
+            </div>
+            <div id="address" class="secrow"></div>
+        </div>
+        <div class="moreshop inwrap hightitem">
+            <span>查看全部90家分店</span>
+            <img src="../image/arrow.png" alt="" class="arrow">
+        </div>
+        <div class="darktitle inwrap">团购详情</div>
+        <div class="tuandetail hightitem inwrap">
+            <div class="tuanitem">
+                <span class="tuan01">代金券</span>
+                <span class="tuan03">30元</span>
+                <span class="tuan02">1张</span>
+            </div>
+            <div class="tuantotalprice">
+                <span class="totalprice02">30元</span>
+                <span class="totalprice01">总价值</span>
+            </div>
+            <div class="tuanrealprice">
+                <span class="realprice02">25.5元</span>
+                <span class="realprice01">团购价</span>
+            </div>
+            <div class="smallitem">
+                <span class="average">网友人均消费</span>
+                <span class="averageprice">￥27</span>
+            </div>
+            <div class="recommandtitle">网友推荐参考</div>
+            <div class="recommanddish">皮蛋瘦肉粥</div>
+            <div class="recommanddish">扁豆焖面</div>
+            <div class="recommanddish">一品粥</div>
+            <div class="recommanddish">蟹黄烧麦</div>
+            <div class="recommanddish lastitem">灌汤包</div>
+            <div class="moredetail hightitem">
+                <span>查看图文详情</span>
+                <img src="../image/arrow.png" alt="" class="arrow">
+            </div>
+        </div>
+        <div class="darktitle inwrap">购买须知</div>
+        <div class="buyinfo hightitem inwrap">
+            <div class="infotitle">有效期</div>
+            <ul>
+                <li><img src="../image/home_serve_dot.png" alt="">2014-11-06至2015-05-31</li>
+            </ul>
+            <div class="infotitle">预约信息</div>
+            <ul>
+                <li><img src="../image/home_serve_dot.png" alt="">无需预约，如遇消费高峰时段您可能需要排队</li>
+            </ul>
+            <div class="infotitle">堂食外带</div>
+            <ul>
+                <li><img src="../image/home_serve_dot.png" alt="">本单只适用于堂食，包厢大厅随您使用</li>
+            </ul>
+            <div class="infotitle">规则提醒</div>
+            <ul>
+                <li><img src="../image/home_serve_dot.png" alt="">可累计使用</li>
+                <li><img src="../image/home_serve_dot.png" alt="">全场通用</li>
+                <li><img src="../image/home_serve_dot.png" alt="">不再与店内其他优惠同享</li>
+            </ul>
+            <div class="infotitle">商家服务</div>
+            <ul>
+                <li><img src="../image/home_serve_dot.png" alt="">提供免费WiFi</li>
+            </ul>
+            <div class="infotitle">温馨提示</div>
+            <ul>
+                <li class="lastitem"><img src="../image/home_serve_dot.png">如需团购券发票，请您在消费时向商户咨询</li>
+            </ul>
+        </div>
+        <div class="darktitle inwrap">嘉和一品粥的其他团购</div>
+        <div class="othertuan inwrap hightitem">
+            <div class="price01">
+                <span class="price">￥42.5</span>
+                <del class="o-price">￥50</del>
+            </div>
+            <span class="title">代金券</span>
+            <img src="../image/arrow.png" alt="" class="arrow">
+        </div>
+        <div class="darktitle inwrap">小伙伴们还看了</div>
+        <div class="othertuan inwrap hightitem bb">
+            <div class="price01">
+                <span class="price">￥42.5</span>
+                <del class="o-price">￥50</del>
+            </div>
+            <span class="title">小棚别墅</span>
+            <img src="../image/arrow.png" alt="" class="arrow">
+        </div>
+        <div class="othertuan inwrap hightitem bb">
+            <div class="price01">
+                <span class="price">￥298</span>
+                <del class="o-price">￥4980</del>
+            </div>
+            <span class="title">耀舞.静馨瑜伽会馆多店通用季卡</span>
+            <img src="../image/arrow.png" alt="" class="arrow">
+        </div>
+        <div class="othertuan inwrap hightitem bb">
+            <div class="price01">
+                <span class="price">￥127</span>
+                <del class="o-price">￥252</del>
+            </div>
+            <span class="title">美年大健康</span>
+            <img src="../image/arrow.png" alt="" class="arrow">
+        </div>
+        <div class="othertuan inwrap hightitem bb">
+            <div class="price01">
+                <span class="price">￥34</span>
+                <del class="o-price">￥43</del>
+            </div>
+            <span class="title">SAY优格冰激凌</span>
+            <img src="../image/arrow.png" alt="" class="arrow">
+        </div>
+        <div class="h20"></div>
+    </body>
+    <script type="text/javascript" src="../script/api.js"></script>
+    <script type="text/javascript" src="../script/common.js"></script>
+    <script type="text/javascript" src="../script/doT.min.js"></script>
+    <script type="text/javascript" src="../script/SHA1.js"></script>
+    <script type="text/javascript" src="../script/localdb.js"></script>
+    <script type="text/javascript" src="../script/remotedb.js"></script>
+    <script type="text/javascript" src="../script/list.js"></script>
+    <script type="text/javascript">
+        apiready = function() {
+            fnInitLocal();
+
+            fnReadyOpenWin();
+
+            fnInit();
+            fnInitPicture();
+
+            fnGet('shop', {
+                id: api.pageParam.shopId
+            }, 0, 1, function(ret, err) {
+                price.innerHTML = ret[0].price;
+                map = $api.byId('map');
+                address.innerHTML = ret[0].address;
+
+                bmap.getCoordsFromName({
+                    city: '北京',
+                    address: ret[0].address
+                }, function(ret, err) {
+                    if (ret.status) {
+                        $api.attr(map, 'param', JSON.stringify(ret));
+                    }
+                });
+
+                var paths = [];
+                for (var i = 0; i < 3; i++) {
+                    if (ret[0]['logo' + i]) {
+                        paths.push(ret[0]['logo' + i].url);
+                    }
+                }
+                
+                uiscrollpicture.reloadData({
+                    data: {
+                        paths: paths
+                    }
+                });
+            });
+        };
+
+        var price, address, picture, uiscrollpicture, map, bmap;
+
+        function fnInit() {
+            price = $api.byId('price');
+            map = $api.byId('map');
+            address = $api.byId('address');
+            picture = $api.byId('picture');
+            uiscrollpicture = api.require('UIScrollPicture');
+            bmap = api.require('bMap');
+        };
+
+        function fnInitPicture() {
+            var height = Math.ceil(api.winWidth / 1.4);
+            picture.style.height = height + 'px';
+            uiscrollpicture.open({
+                rect: {
+                    x: 0,
+                    y: 0,
+                    w: api.winWidth,
+                    h: height
+                },
+                data: {
+                    paths: ['widget://image/default1.jpg']
+                },
+                styles: {
+                    indicator: {
+                        align: 'center',
+                        color: '#eee',
+                        activeColor: '#f00'
+                    }
+                },
+                placeholderImg: 'widget://image/default1.jpg',
+                interval: 60,
+                loop: false,
+                fixedOn: api.frameName,
+                fixed: false
+            });
+        };
+
+        var data;
+
+        function fnInitShop() {
+            fnGetShoplist(true, {
+                "id": api.pageParam.shopId
+            }, 1, true, function(ret, err) {
+                data = ret[0];
+                fnSaveShopToHistory(db, data);
+
+                price.innerHTML = data.price;
+                address.innerHTML = data.address;
+                var paths = [];
+                for (var i = 0; i < 3; i++) {
+                    if (data['logo' + i]) {
+                        paths.push(data['logo' + i].url);
+                    }
+                }
+
+                uiscrollpicture.reloadData({
+                    data: {
+                        paths: paths
+                    }
+                });
+            });
+        };
+
+        function fnAddFavorite() {
+            fnInsertFavorite(api.pageParam.shopId, function() {
+                api.toast({
+                    msg: '收藏成功，您可前往我的收藏查看',
+                    duration: 2000,
+                    location: 'bottom'
+                });
+            });
+        };
+    </script>
+
+</html>

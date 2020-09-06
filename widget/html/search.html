@@ -1,0 +1,159 @@
+<!doctype html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+        <title>APICloud APP</title>
+        <link rel="stylesheet" type="text/css" href="../css/api.css" />
+        <style>
+            header {
+                background: #fcfcfc;
+                height: 50px;
+                border-bottom: 1px solid #DDDFE3;
+            }
+            
+            .left {
+                float: left;
+                width: 50px;
+                height: 50px;
+                background: url(../image/header/back.png) no-repeat center center;
+                background-size: 15px auto;
+            }
+            
+            .right {
+                float: right;
+                width: 50px;
+                line-height: 50px;
+                color: #FF8400;
+                font-size: 16px;
+                text-align: center;
+            }
+            
+            .right-hov {
+                color: #DD8400;
+            }
+            
+            .middle {
+                position: absolute;
+                left: 50px;
+                right: 60px;
+                margin-top: 8px;
+                height: 34px;
+                border-radius: 34px;
+                background-color: #E8E8E8;
+            }
+            
+            .middle>img:first-child {
+                float: left;
+                padding-top: 7px;
+                height: 20px;
+                vertical-align: top;
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+            
+            .middle>input {
+                position: absolute;
+                left: 40px;
+                right: 50px;
+                margin-top: 8px;
+                height: 18px;
+                line-height: 18px;
+                color: #999;
+                font-size: 14px;
+                outline: none;
+            }
+            
+            .middle>input::-webkit-input-placeholder {
+                color: #666;
+                line-height: 18px;
+                font-size: 14px;
+            }
+            
+            .middle>img:last-child {
+                float: right;
+                padding-top: 4px;
+                height: 27px;
+                vertical-align: top;
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <header id="header">
+            <div class="left event-back"></div>
+            <div class="right" tapmode="highlight" onclick="fnSearch();">搜索</div>
+            <div class="middle">
+                <img src="../image/header/search_groupbuy.png">
+                <input id="searchText" type="text" placeholder="请输入搜索内容">
+                <img src="../image/header/mic.png" tapmode onclick="fnOpenSpeechRecognizer();">
+            </div>
+        </header>
+    </body>
+    <script type="text/javascript" src="../script/api.js"></script>
+    <script type="text/javascript" src="../script/common.js"></script>
+    <script type="text/javascript">
+        apiready = function() {
+            fnReady();
+            fnInitInput();
+            fnReadyFrame();
+        };
+
+        var uiinput, searchText;
+
+        function fnInitInput() {
+            searchText = $api.byId('searchText');
+            var rect = $api.offset(searchText);
+            uiinput = api.require('UIInput');
+            uiinput.open({
+                rect: rect,
+                styles: {
+                    bgColor: '#E8E8E8',
+                    size: 14,
+                    color: '#999',
+                    placeholder: {
+                        color: '#ccc'
+                    }
+                },
+                maxRows: 1,
+                placeholder: '请输入搜索内容',
+                keyboardType: 'search',
+                fixedOn: api.frameName
+            });
+        };
+
+        function fnOpenSpeechRecognizer() {
+            api.toast({
+                msg: '开始语音识别',
+                duration: 3000,
+                location: 'middle'
+            });
+
+            var speechRecognizer = api.require('speechRecognizer');
+            speechRecognizer.record({}, function(ret, err) {
+                if (ret.status) {
+                    $api.byId('searchText').value = ret.wordStr;
+                }
+            });
+        };
+
+        function fnSearch() {
+            uiinput.value(function(ret, err) {
+                if (ret.status) {
+                    api.openWin({
+                        name: 'search_result',
+                        url: './search_result.html',
+                        bounces: false,
+                        pageParam: {
+                            keyword: ret.msg
+                        }
+                    });
+                }
+            });
+        };
+    </script>
+
+</html>

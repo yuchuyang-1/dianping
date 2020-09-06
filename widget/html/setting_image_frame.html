@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+        <title>APICloud APP</title>
+        <link rel="stylesheet" type="text/css" href="../css/api.css" />
+        <style>
+            html,
+            body {
+                height: 100%;
+                background: #f0f0f0;
+            }
+            
+            .title {
+                background-color: rgb(138, 136, 129);
+                height: 44px;
+                line-height: 44px;
+                padding-left: 10px;
+                color: #fff;
+                font-size: 14px;
+                border-bottom: solid rgb(96, 96, 96) 1px;
+            }
+            
+            .item {
+                background-color: #f0f0f0;
+                height: 44px;
+                line-height: 44px;
+                padding-left: 10px;
+                color: #000;
+                font-size: 14px;
+                border-bottom: solid rgb(215, 215, 215) 1px;
+            }
+            
+            .item>img {
+                float: right;
+                padding-top: 10px;
+                padding-right: 10px;
+                height: 25px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="title">
+            <span>图片显示设置</span>
+        </div>
+        <div class="item" tapmode onclick="fnChange()">
+            <span>非Wi-Fi下显示图片</span>
+            <img id="cache" src="../image/switch_on.png">
+        </div>
+    </body>
+    <script type="text/javascript" src="../script/api.js"></script>
+    <script type="text/javascript">
+        apiready = function() {
+            fnInit();
+            
+            flag = !flag;
+            fnChange();
+        };
+
+        var flag, cache;
+
+        function fnInit() {
+            flag = $api.getStorage('cache_disabled') || false;
+            cache = $api.byId('cache');
+        };
+
+        function fnChange() {
+            flag = !flag;
+            $api.setStorage('cache_disabled', flag);
+
+            var onoff = flag ? 'on' : 'off';
+            cache.src = '../image/switch_' + onoff + '.png';
+        };
+    </script>
+    </html

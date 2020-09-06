@@ -1,0 +1,144 @@
+<!doctype html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+        <title>APICloud APP</title>
+        <link rel="stylesheet" type="text/css" href="../css/api.css" />
+        <style>
+            html {
+                width: 100%;
+                height: 100%;
+                background: transparent;
+            }
+            
+            body {
+                background: rgba(0, 0, 0, 0.4);
+                width: 100%;
+                height: 100%;
+            }
+            
+            .floatbox {
+                position: absolute;
+                text-align: center;
+                background: #fff;
+                bottom: 0;
+            }
+            
+            .floatheader {
+                height: 40px;
+                line-height: 40px;
+                font-size: 14px;
+                color: #999;
+                text-align: left;
+                margin-left: 20px;
+            }
+            
+            .floatbody {
+                border-bottom: 1px solid #D0D2D6;
+            }
+            
+            .floatbodybtn {
+                width: 20px;
+                height: 20px;
+                background: #0fc;
+            }
+            
+            .floatfooter {
+                height: 40px;
+                line-height: 40px;
+                font-size: 18px;
+            }
+            
+            .row {
+                display: -webkit-box;
+                display: -webkit-flex;
+            }
+            
+            .col {
+                -webkit-box-flex: 1;
+                -webkit-flex: 1;
+                flex: 1;
+                padding: 10px;
+            }
+            
+            .col img {
+                width: 50%;
+                display: block;
+                margin: 0 auto;
+            }
+            
+            .col span {
+                font-size: 12px;
+                padding-top: 10px;
+            }
+            
+            .btn-hov {
+                background-color: #D1D4D7;
+            }
+        </style>
+    </head>
+
+    <body tapmode onclick="fnClose()">
+        <div class="floatbox">
+            <div class="floatheader">分享店家</div>
+            <div class="floatbody">
+                <div class="row">
+                    <div class="col" tapmode="btn-hov" onclick="fnShare('微信好友')">
+                        <img src="../image/share/share_to_icon_wx.png" alt="">
+                        <span>微信好友</span>
+                    </div>
+                    <div class="col" tapmode="btn-hov" onclick="fnShare('微信朋友圈')">
+                        <img src="../image/share/share_to_icon_wxq.png" alt="">
+                        <span>微信朋友圈</span>
+                    </div>
+                    <div class="col" tapmode="btn-hov" onclick="fnShare('QQ')">
+                        <img src="../image/share/share_to_icon_qq.png" alt="">
+                        <span>QQ</span>
+                    </div>
+                    <div class="col" tapmode="btn-hov" onclick="fnShare('短信')">
+                        <img src="../image/share/share_to_icon_sms.png" alt="">
+                        <span>短信</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col" tapmode="btn-hov" onclick="fnShare('新浪微博')">
+                        <img src="../image/share/share_to_icon_weibo.png" alt="">
+                        <span>新浪微博</span>
+                    </div>
+                    <div class="col" tapmode="btn-hov" onclick="fnShare('QQ空间')">
+                        <img src="../image/share/share_to_icon_qzone.png" alt="">
+                        <span>QQ空间</span>
+                    </div>
+                    <div class="col" tapmode="btn-hov" onclick="fnShare('电子邮件')">
+                        <img src="../image/share/share_to_icon_mail.png" alt="">
+                        <span>电子邮件</span>
+                    </div>
+                    <div class="col" tapmode="btn-hov" onclick="fnShare('复制')">
+                        <img src="../image/share/share_to_icon_copy.png" alt="">
+                        <span>复制</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript" src="../script/api.js"></script>
+    <script type="text/javascript">
+        function fnShare(platform) {
+            api.toast({
+                msg: '演示版无法通过' + platform + '分享',
+                duration: 2000,
+                location: 'bottom'
+            });
+        };
+
+        function fnClose() {
+            api.execScript({
+                name: api.winName,
+                script: 'fnOpenShareFrame();'
+            });
+        };
+    </script>
+
+</html>
